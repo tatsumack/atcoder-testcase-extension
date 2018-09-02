@@ -2,9 +2,13 @@ $(function () {
     const url = location.href;
     const isBeta = url.search("beta") >= 0;
     const contestName = getContestName();
+    const cacheDataKey = "atcoder-testcase-" + contestName;
+    const cacheFetchedAtKey = "atcoder-test-case-last-fetched-at-" + contestName;
+    const cacheMin = 10;
 
     function onSuccess(data) {
         if (data.status != "success") return;
+        localStorage.setItem(cacheDataKey, JSON.stringify(data));
 
         var problemId = getProbremId();
         var content = JSON.parse(data.content);
@@ -36,12 +40,21 @@ $(function () {
 
     function main() {
         if (contestName.indexOf("abc") == -1 && contestName.indexOf("arc") == -1 && contestName.indexOf("agc") == -1) return;
+
+        const data = localStorage.getItem(cacheDataKey);
+        const lastFetchedAt = localStorage.getItem(cacheFetchedAtKey);
+        if (data && lastFetchedAt && new Date().getTime() < Number(lastFetchedAt) + cacheMin * 60 * 1000) {
+            onSuccess(JSON.parse(data));
+            return;
+        }
+
         $.ajax({
             url: "https://script.google.com/macros/s/AKfycbyUlYoF05ux7M1jBRnXwYkV9SjJIL9MNlHbWiB_eFiE93_91Hs/exec?contest=" + contestName,
             dataType: "json",
             type: "get",
             success: onSuccess
         });
+        localStorage.setItem(cacheFetchedAtKey, new Date().getTime().toString());
     }
 
     main();
