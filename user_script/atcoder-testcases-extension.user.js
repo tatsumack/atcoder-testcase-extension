@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           AtCoder TestCase Extension
 // @namespace      tatsumack
-// @version        0.1.0
+// @version        1.0.1
 // @description    AtCoderテストケースへのリンクを追加します
 // @author         tatsumack
 // @license        MIT
@@ -40,15 +40,21 @@
         if (!inUrl || !outUrl) return;
 
         $("table:eq(2) tr:gt(0) td:nth-child(1)").each(function () {
-            var fileName = $(this).text();
-            var inFile = fileName;
-            var outFile = fileName;
-            if (fileName.indexOf(".txt") == -1) {
-                inFile += ".in";
-                outFile += ".out";
-            }
-            $(this).append(" [ <a href='" + inUrl + "?preview=" + inFile + "'>in</a> / <a href='" + outUrl + "?preview=" + outFile + "'>out</a> ]");
+            var testCaseName = $(this).text();
+            var fileName = getFileName(testCaseName);
+            $(this).append(" [ <a href='" + inUrl + "?preview=" + fileName.in + "'>in</a> / <a href='" + outUrl + "?preview=" + fileName.out + "'>out</a> ]");
         });
+    }
+
+    function getFileName(testCaseName) {
+        let inFile = testCaseName;
+        let outFile = testCaseName;
+        const exceptionList = ['arc096', 'abc095'];
+        if (testCaseName.indexOf(".txt") === -1 && exceptionList.indexOf(contestName) === -1) {
+            inFile += ".in";
+            outFile += ".out";
+        }
+        return {in: inFile, out: outFile};
     }
 
     function getContestName() {
