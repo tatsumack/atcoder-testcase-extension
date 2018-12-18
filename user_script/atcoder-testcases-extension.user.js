@@ -1,13 +1,12 @@
 // ==UserScript==
 // @name           AtCoder TestCase Extension
 // @namespace      tatsumack
-// @version        1.0.1
+// @version        1.0.2
 // @description    AtCoderテストケースへのリンクを追加します
 // @author         tatsumack
 // @license        MIT
 // @supportURL     https://github.com/tatsumack/atcoder-testcase-extension/issues
-// @match          https://beta.atcoder.jp/contests/*/submissions/*
-// @match          https://*.contest.atcoder.jp/submissions/*
+// @match          https://atcoder.jp/contests/*/submissions/*
 // ==/UserScript==
 
 (function (callback) {
@@ -21,7 +20,6 @@
     document.body.appendChild(script);
 })(function ($) {
     const url = location.href;
-    const isBeta = url.search("beta") >= 0;
     const contestName = getContestName();
     const cacheDataKey = "atcoder-testcase-" + contestName;
     const cacheFetchedAtKey = "atcoder-test-case-last-fetched-at-" + contestName;
@@ -58,7 +56,7 @@
     }
 
     function getContestName() {
-        return isBeta ? url.split("/")[4] : url.split("/")[2].split(".")[0];
+        return url.split("/")[4];
     }
 
     function getProbremId() {
