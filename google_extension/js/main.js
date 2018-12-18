@@ -1,6 +1,5 @@
 $(function () {
     const url = location.href;
-    const isBeta = url.search("beta") >= 0;
     const contestName = getContestName();
     const cacheDataKey = "atcoder-testcase-" + contestName;
     const cacheFetchedAtKey = "atcoder-test-case-last-fetched-at-" + contestName;
@@ -37,7 +36,7 @@ $(function () {
     }
 
     function getContestName() {
-        return isBeta ? url.split("/")[4] : url.split("/")[2].split(".")[0];
+        return url.split("/")[4];
     }
 
     function getProbremId() {

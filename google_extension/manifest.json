@@ -2,12 +2,11 @@
     "manifest_version": 2,
     "name": "AtCoder TestCase Extension",
     "description": "AtCoderテストケースへのリンクを追加します",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "content_scripts": [
         {
             "matches": [
-                "https://beta.atcoder.jp/contests/*/submissions/*",
-                "https://*.contest.atcoder.jp/submissions/*"
+                "https://atcoder.jp/contests/*/submissions/*"
             ],
             "js": [
                 "js/jquery-3.3.1.min.js",
