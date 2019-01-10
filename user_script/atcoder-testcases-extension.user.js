@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           AtCoder TestCase Extension
 // @namespace      tatsumack
-// @version        1.0.2
+// @version        1.0.3
 // @description    AtCoderテストケースへのリンクを追加します
 // @author         tatsumack
 // @license        MIT
