@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           AtCoder TestCase Extension
 // @namespace      tatsumack
-// @version        1.0.2
+// @version        1.0.3
 // @description    AtCoderテストケースへのリンクを追加します
 // @author         tatsumack
 // @license        MIT
@@ -47,7 +47,7 @@
     function getFileName(testCaseName) {
         let inFile = testCaseName;
         let outFile = testCaseName;
-        const exceptionList = ['arc096', 'abc095'];
+        const exceptionList = ['arc096', 'abc095', 'abc043', 'arc059'];
         if (testCaseName.indexOf(".txt") === -1 && exceptionList.indexOf(contestName) === -1) {
             inFile += ".in";
             outFile += ".out";
