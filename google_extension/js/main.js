@@ -27,7 +27,7 @@ $(function () {
     function getFileName(testCaseName) {
         let inFile = testCaseName;
         let outFile = testCaseName;
-        const exceptionList = ['arc096', 'abc095', 'abc043', 'arc059'];
+        const exceptionList = ['arc096', 'abc095', 'abc043', 'arc059', 'nikkei2019-qual'];
         if (testCaseName.indexOf(".txt") === -1 && exceptionList.indexOf(contestName) === -1) {
             inFile += ".in";
             outFile += ".out";
@@ -44,14 +44,13 @@ $(function () {
     }
 
     function main() {
-        if (contestName.indexOf("abc") == -1 && contestName.indexOf("arc") == -1 && contestName.indexOf("agc") == -1) return;
-
         const data = localStorage.getItem(cacheDataKey);
         const lastFetchedAt = localStorage.getItem(cacheFetchedAtKey);
         if (data && lastFetchedAt && new Date().getTime() < Number(lastFetchedAt) + cacheMin * 60 * 1000) {
             onSuccess(JSON.parse(data));
             return;
         }
+        console.log(contestName)
 
         $.ajax({
             url: "https://script.google.com/macros/s/AKfycbyUlYoF05ux7M1jBRnXwYkV9SjJIL9MNlHbWiB_eFiE93_91Hs/exec?contest=" + contestName,
