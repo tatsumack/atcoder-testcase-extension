@@ -51,6 +51,12 @@ function convertContestId(contestId) {
         map[abc] = arc;
     }
 
+    map["nikkei2019-qual"] = "2019nikkei_qual";
+    map["tenka1-2018"]     = "tenka1_2018";
     contestId = map[contestId] || contestId;
-    return contestId.toUpperCase();
+
+    if (contestId.indexOf("abc") === 0 || contestId.indexOf("arc") === 0 || contestId.indexOf("agc") === 0) {
+        contestId = contestId.toUpperCase();
+    }
+    return contestId
 }
