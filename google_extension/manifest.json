@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "AtCoder TestCase Extension",
     "description": "AtCoderテストケースへのリンクを追加します",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "content_scripts": [
         {
             "matches": [
