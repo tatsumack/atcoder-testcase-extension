@@ -27,7 +27,7 @@ $(function () {
     function getFileName(testCaseName) {
         let inFile = testCaseName;
         let outFile = testCaseName;
-        const exceptionList = ['arc096', 'abc095', 'abc043', 'arc059', 'nikkei2019-qual'];
+        const exceptionList = ['arc096', 'abc095', 'abc043', 'arc059', 'nikkei2019-qual', 'abc120'];
         if (testCaseName.indexOf(".txt") === -1 && exceptionList.indexOf(contestName) === -1) {
             inFile += ".in";
             outFile += ".out";
