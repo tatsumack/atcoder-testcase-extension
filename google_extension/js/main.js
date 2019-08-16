@@ -17,7 +17,7 @@ $(function () {
     function draw(inUrl, outUrl) {
         if (!inUrl || !outUrl) return;
 
-        $("table:eq(2) tr:gt(0) td:nth-child(1)").each(function () {
+        $("#main-container > div.row > div:nth-child(2) > div:nth-child(12) > table > tbody > tr > td:nth-child(1)").each(function () {
             var testCaseName = $(this).text();
             var fileName = getFileName(testCaseName);
             $(this).append(" [ <a href='" + inUrl + "?preview=" + fileName.in + "'>in</a> / <a href='" + outUrl + "?preview=" + fileName.out + "'>out</a> ]");
@@ -40,7 +40,7 @@ $(function () {
     }
 
     function getProbremId() {
-        return $("td a").first().text().slice(0, 1).toUpperCase();
+        return $("#main-container > div.row > div:nth-child(2) > div:nth-child(9) > table > tbody > tr:nth-child(2) > td > a").first().text().slice(0, 1).toUpperCase();
     }
 
     function main() {
