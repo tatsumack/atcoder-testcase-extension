@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           AtCoder TestCase Extension
 // @namespace      tatsumack
-// @version        1.0.6
+// @version        1.0.7
 // @description    AtCoderテストケースへのリンクを追加します
 // @author         tatsumack
 // @license        MIT
@@ -37,7 +37,7 @@
     function draw(inUrl, outUrl) {
         if (!inUrl || !outUrl) return;
 
-        $("#main-container > div.row > div:nth-child(2) > div:nth-child(12) > table > tbody > tr > td:nth-child(1)").each(function () {
+        $("#main-container > div.row > div:nth-child(2) > div:nth-last-child(1) > table > tbody > tr > td:nth-child(1)").each(function () {
             var testCaseName = $(this).text();
             var fileName = getFileName(testCaseName);
             $(this).append(" [ <a href='" + inUrl + "?preview=" + fileName.in + "'>in</a> / <a href='" + outUrl + "?preview=" + fileName.out + "'>out</a> ]");
