@@ -11,26 +11,25 @@ $(function () {
 
         var problemId = getProbremId();
         var content = JSON.parse(data.content);
-        draw(content[problemId].in, content[problemId].out);
+        draw(content[problemId].in, content[problemId].out, content[problemId].ext);
     }
 
-    function draw(inUrl, outUrl) {
+    function draw(inUrl, outUrl, ext) {
         if (!inUrl || !outUrl) return;
 
         $("#main-container > div.row > div:nth-child(2) > div:nth-last-child(1) > table > tbody > tr > td:nth-child(1)").each(function () {
             var testCaseName = $(this).text();
-            var fileName = getFileName(testCaseName);
+            var fileName = getFileName(testCaseName, ext);
             $(this).append(" [ <a href='" + inUrl + "?preview=" + fileName.in + "'>in</a> / <a href='" + outUrl + "?preview=" + fileName.out + "'>out</a> ]");
         });
     }
 
-    function getFileName(testCaseName) {
+    function getFileName(testCaseName, ext) {
         let inFile = testCaseName;
         let outFile = testCaseName;
-        const exceptionList = ['arc096', 'abc095', 'abc043', 'arc059', 'nikkei2019-qual', 'abc120'];
-        if (testCaseName.indexOf(".txt") === -1 && exceptionList.indexOf(contestName) === -1) {
-            inFile += ".in";
-            outFile += ".out";
+        if (testCaseName.indexOf(".txt") === -1 && ext !== 'none') {
+            inFile += ext === '' ? ".in" : '.' + ext;
+            outFile += ext === '' ? ".out" : '.' + ext;
         }
         return {in: inFile, out: outFile};
     }

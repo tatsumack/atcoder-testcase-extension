@@ -21,7 +21,7 @@ function getProblemData(contestId) {
     var sheet = ss.getSheetByName(contestId);
     if (sheet == null) return;
 
-    var values = sheet.getRange(1, 1, sheet.getLastRow(), 3).getValues();
+    var values = sheet.getRange(1, 1, sheet.getLastRow(), 4).getValues();
 
     var res = {};
     for (var row in values) {
@@ -29,8 +29,10 @@ function getProblemData(contestId) {
         var id = values[row][0];
         var type = values[row][1];
         var url = values[row][2];
+        var ext = values[row][3];
         res[id] = res[id] || {};
         res[id][type] = url;
+        res[id]['ext'] = ext;
     }
 
     return JSON.stringify(res);
