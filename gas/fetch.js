@@ -64,7 +64,7 @@ function fetchProblems() {
 function fetchABCARC() {
     var abc = [];
     for (var p = 1; p <= 30; ++p) {
-        var url = "https://beta.atcoder.jp/contests/archive?category=5" + "&page=" + p;
+        var url = "https://atcoder.jp/contests/archive?ratedType=1" + "&page=" + p;
         var archive = fetchContestsArchive(url);
         if (archive === null) break;
 
@@ -78,7 +78,7 @@ function fetchABCARC() {
 
     var arc = {};
     for (var p = 1; p <= 30; ++p) {
-        var url = "https://beta.atcoder.jp/contests/archive?category=4" + "&page=" + p;
+        var url = "https://atcoder.jp/contests/archive?ratedType=2" + "&page=" + p;
         var archive = fetchContestsArchive(url);
         if (archive === null) break;
 
@@ -116,7 +116,7 @@ function fetchContestsArchive(url) {
         .iterate();
 
     var contests = Parser.data(response.getContentText())
-        .from("<td><a href='/contests/")
+        .from("</span> <a href='/contests/")
         .to("'>")
         .iterate();
 
