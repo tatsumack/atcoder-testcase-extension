@@ -42,7 +42,7 @@ function fetchProblems() {
         contestSheet = ss.insertSheet(data.id);
         contestSheet.getRange(1, 1).setValue("id");
         contestSheet.getRange(1, 2).setValue("type");
-        contestSheet.getRange(1, 2).setValue("url");
+        contestSheet.getRange(1, 3).setValue("url");
         var problemUrls = getUrls("https://www.dropbox.com/sh/" + data.url);
         var rows = 2;
         problemUrls.forEach(function (problemUrl) {
