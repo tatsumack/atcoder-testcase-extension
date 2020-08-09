@@ -12,6 +12,8 @@ function fetchContests() {
 
     var rows = 2;
     urls.forEach(function (url) {
+        url = url.replace('https://www.dropbox.com/sh/', '');
+        url = url.replace('?dl=0', '');
         var id = url.split('/')[2].split('_ABC')[0];
         sheet.getRange(rows, 1).setValue(id);
         sheet.getRange(rows, 2).setValue(url);
@@ -46,9 +48,11 @@ function fetchProblems() {
         var problemUrls = getUrls("https://www.dropbox.com/sh/" + data.url);
         var rows = 2;
         problemUrls.forEach(function (problemUrl) {
-            var inoutUrls = getUrls("https://www.dropbox.com/sh/" + problemUrl);
+            var inoutUrls = getUrls(problemUrl);
 
             inoutUrls.forEach(function (inoutUrl) {
+                inoutUrl = inoutUrl.replace('https://www.dropbox.com/sh/', '');
+                inoutUrl = inoutUrl.replace('?dl=0', '');
                 var problem = inoutUrl.split('/')[3];
                 var type = inoutUrl.split('/')[4];
                 contestSheet.getRange(rows, 1).setValue(problem);
@@ -124,29 +128,14 @@ function fetchContestsArchive(url) {
 }
 
 function getUrls(targetUrl) {
-    var payload =
-        {
-            url: targetUrl,
-            renderType: 'HTML',
-            outputAsJson: true
-        };
-    payload = JSON.stringify(payload);
-    payload = encodeURIComponent(payload);
-
-    key = PropertiesService.getScriptProperties().getProperty("PHANTOM_JS_CLOUD_KEY");
-    var scrapingUrl = 'https://phantomjscloud.com/api/browser/v2/' + key + '/?request=' + payload;
-    Logger.log(scrapingUrl);
-
-    const options = {
-        method: "get",
-        followRedirects: true
+    var headers = {
+        'Authorization': 'Bearer '+ PropertiesService.getScriptProperties().getProperty("GCLOUD_AUTH_TOKEN")
     };
-    const response = UrlFetchApp.fetch(scrapingUrl, options);
-    Utilities.sleep(1000);
-    var json = JSON.parse(response.getContentText());
-    return Parser.data(json.content.data)
-        .from('<a href=\"https://www.dropbox.com/sh/')
-        .to('?dl=0\" class=\"sl-link sl-link--folder\">')
-        .iterate();
+    var options = {
+        'method': 'GET',
+        'headers': headers,
+    };
+    var response = UrlFetchApp.fetch('https://asia-northeast1-project-id-0053938540869249501.cloudfunctions.net/fetchDropbox?url=' + encodeURIComponent(targetUrl), options).getContentText();
+    return JSON.parse(response);
 }
 
