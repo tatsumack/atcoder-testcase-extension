@@ -65,6 +65,55 @@ function fetchProblems() {
     });
 }
 
+function fetchTestcaseExts() {
+    var sheet = ss.getSheetByName("contests");
+    var values = sheet.getRange(1, 1, sheet.getLastRow(), 2).getValues();
+
+    var res = [];
+    for (var row in values) {
+        if (row == 0) continue;
+        var data = {};
+        for (var col in values[row]) {
+            if (!values[row][col]) continue;
+            data[values[0][col]] = values[row][col];
+        }
+        if (0 === Object.keys(data).length) continue;
+        res.push(data);
+    }
+
+    var cnt = 0;
+    res.forEach(function (data) {
+        if (cnt >= 3) return;
+
+        var contestSheet = ss.getSheetByName(data.id);
+        if (contestSheet == null) return;
+
+        var label = contestSheet.getRange(1, 4).getValue();
+        if (label === 'exts') return;
+        contestSheet.getRange(1, 4).setValue('exts');
+
+        Logger.log(data.id);
+        var values = contestSheet.getRange(1, 1, contestSheet.getLastRow(), 3).getValues();
+        for (let row = 0; row < values.length; row++) {
+            if (row == 0) continue;
+            var url = values[row][2];
+            if (url === '') continue;
+            Logger.log(url);
+            var urls = getUrls(url);
+            if (urls.length === 0) continue;
+            var fileUrl = urls[0];
+            fileUrl = fileUrl.replace('https://www.dropbox.com/sh/', '');
+            fileUrl = fileUrl.replace('?dl=0', '');
+            var fileName = fileUrl.split('/').slice(-1)[0];
+            var arr = fileName.split('.');
+            var ext = arr.length <= 1 ? 'none' : arr.slice(-1)[0];
+            Logger.log(ext);
+            contestSheet.getRange(row + 1, 4).setValue(ext);
+        }
+        cnt++;
+    });
+}
+
 function fetchABCARC() {
     var abc = [];
     for (var p = 1; p <= 30; ++p) {
@@ -129,7 +178,7 @@ function fetchContestsArchive(url) {
 
 function getUrls(targetUrl) {
     var headers = {
-        'Authorization': 'Bearer '+ PropertiesService.getScriptProperties().getProperty("GCLOUD_AUTH_TOKEN")
+        'Authorization': 'Bearer ' + PropertiesService.getScriptProperties().getProperty("GCLOUD_AUTH_TOKEN")
     };
     var options = {
         'method': 'GET',
