@@ -27,7 +27,7 @@ const getAccessToken = function (header) {
     return match ? match[1] : null;
 }
 
-exports.parseDropbox = async (req, res) => {
+exports.main = async (req, res) => {
     const accessToken = getAccessToken(req.get('Authorization'));
     if (accessToken != process.env.ACCESS_TOKEN) {
         res.status(403).send("invalid access token")

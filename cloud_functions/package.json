@@ -1,5 +1,5 @@
 {
-  "name": "parse_dropbox",
+  "name": "scraping_dropbox",
   "version": "0.0.1",
   "dependencies": {
     "puppeteer": "^5.2.1"

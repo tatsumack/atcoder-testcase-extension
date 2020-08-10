@@ -135,7 +135,7 @@ function getUrls(targetUrl) {
         'method': 'GET',
         'headers': headers,
     };
-    var response = UrlFetchApp.fetch('https://asia-northeast1-project-id-0053938540869249501.cloudfunctions.net/fetchDropbox?url=' + encodeURIComponent(targetUrl), options).getContentText();
+    var response = UrlFetchApp.fetch('https://asia-northeast1-project-id-0053938540869249501.cloudfunctions.net/scraping_dropbox?url=' + encodeURIComponent(targetUrl), options).getContentText();
     return JSON.parse(response);
 }
 
