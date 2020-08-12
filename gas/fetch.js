@@ -168,9 +168,11 @@ function fetchContestsArchive(url) {
         .to("</time>")
         .iterate();
 
-    var contests = Parser.data(response.getContentText())
-        .from("</span> <a href='/contests/")
-        .to("'>")
+    var body = Parser.data(response.getContentText()).from('<tbody>').to('</tbody>').build();
+
+    var contests = Parser.data(body)
+        .from('<a href="/contests/')
+        .to('">')
         .iterate();
 
     return {times: times, contests: contests};
